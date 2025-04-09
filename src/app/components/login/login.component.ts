@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  loginForm: FormGroup;
+  loginForm;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       senha: ['', Validators.required]
@@ -22,18 +22,20 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    if (this.loginForm.valid) {
-      const { email, senha } = this.loginForm.value;
-      this.authService.login(email, senha).subscribe({
-        next: (response) => {
-          console.log('Login bem-sucedido:', response); // Adicione isso para debug
+    if (this.loginForm.invalid) return;
+
+    const { email, senha } = this.loginForm.value;
+
+    this.http.post('https://api-users-gdsb.onrender.com/login', { email, password: senha })
+      .subscribe({
+        next: (response: any) => {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('user', JSON.stringify(response.user || {}));
           this.router.navigate(['/menu']);
         },
-        error: (err) => {
-          console.error('Erro no login:', err); // Adicione isso para debug
-          alert('Erro ao fazer login');
+        error: () => {
+          alert('Email ou senha inválidos');
         }
       });
-    }
   }
 }

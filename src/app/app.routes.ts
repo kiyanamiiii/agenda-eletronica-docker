@@ -6,14 +6,17 @@ import { ContatosComponent } from './components/contatos/contatos.component';
 import { LocaisComponent } from './components/locais/locais.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { AuthGuard } from './guards/auth.guard';
+
 import { AdminGuard } from './guards/admin.guard';
+import { RegisterComponent } from './components/register/register.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'menu', component: MenuComponent, canActivate: [AuthGuard] },
   { path: 'compromissos', component: CompromissosComponent, canActivate: [AuthGuard] },
   { path: 'contatos', component: ContatosComponent, canActivate: [AuthGuard] },
-  { path: 'locais', component: LocaisComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'locais', component: LocaisComponent, canActivate: [AuthGuard] },
   { path: 'usuarios', component: UsuariosComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

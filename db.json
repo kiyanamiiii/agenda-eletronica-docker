@@ -1,5 +1,11 @@
 {
   "compromissos": [],
   "contatos": [],
-  "locais": []
+  "locais": [
+    {
+      "id": "8db9",
+      "nome": "awd",
+      "endereco": "awd"
+    }
+  ]
 }

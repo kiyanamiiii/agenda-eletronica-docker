@@ -1,0 +1,23 @@
+<div class="login-container">
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <div class="register-container">
+          <h2>Crie sua Conta</h2>
+            <div class="form-group">
+              <input type="text" formControlName="name" placeholder="Digite seu nome" required>
+            </div>
+            <div class="form-group">
+              <input type="email" formControlName="email" placeholder="Digite seu e-mail" required>
+            </div>
+            <div class="form-group">
+              <input type="password" formControlName="password" placeholder="Digite sua senha" required>
+            </div>
+            <div class="form-group">
+              <select formControlName="role" required>
+                <option value="user">Usuário</option>
+                <option value="adm">Administrador</option>
+              </select>
+            </div>
+            <button type="submit" [disabled]="registerForm.invalid">Cadastrar</button>
+            <p>Já tem uma conta? <a routerLink="/login">Faça login</a></p>
+        </div>
+        
