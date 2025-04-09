@@ -11,4 +11,4 @@ RUN npm run build --prod
 # Etapa de produção
 FROM nginx:alpine
 COPY default.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/dist/agenda /usr/share/nginx/html
+COPY --from=builder /app/dist/agenda/browser /usr/share/nginx/html
