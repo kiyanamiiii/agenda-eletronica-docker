@@ -1,0 +1,19 @@
+services:
+  angular-app:
+    container_name: angular-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+
+  fake-api:
+    container_name: fake-api
+    image: clue/json-server
+    ports:
+      - "3000:80"
+    volumes:
+      - ./db.json:/data/db.json
+    environment:
+      - JSON_SERVER_DATABASE=/data/db.json
+
